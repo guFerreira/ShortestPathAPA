@@ -9,4 +9,14 @@ Versão do [Python](https://www.python.org/downloads/) utilizada: 3.8
 - O código fonte é composto de somente um arquivo chamado "dijkstra.py".
 - Entre no diretório onde o arquivo está pelo terminal.
 - Digite o comando "python3 dijkstra.py".
+
+```
+python3 dijkstra.py
+
+Shortest distance is 13
+Optimal path is ['a', 'c', 'd', 'e', 'h']
+Shortest distance is 7
+Optimal path is ['a', 'b', 'c']
+```
+
 - O programa será executado.
