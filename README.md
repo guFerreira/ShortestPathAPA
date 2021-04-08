@@ -20,3 +20,9 @@ Optimal path is ['a', 'b', 'c']
 ```
 
 - O programa será executado.
+
+
+## Referências
+Utilizamos como base os algoritmos desenvolvidos nos videos:
+-[Dijkstra's Algorithm in Python Explained](https://www.youtube.com/watch?v=Ub4-nG09PFw&ab_channel=AmitabhaDey)
+-[Implementation of dijkstra in python](https://www.youtube.com/watch?v=IG1QioWSXRI&ab_channel=IanSullivan)
