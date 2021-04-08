@@ -6,7 +6,12 @@ Repositório do trabalho da disciplina de análise e projeto de algoritmos
 Versão do [Python](https://www.python.org/downloads/) utilizada: 3.8
 
 ## Para Acesso ao repositório
+
+```
+
 $ git clone https://github.com/guFerreira/ShortestPathAPA.git
+
+```
 
 ## Como Executar
 - O código fonte é composto de somente um arquivo chamado "dijkstra.py".
@@ -16,10 +21,6 @@ $ git clone https://github.com/guFerreira/ShortestPathAPA.git
 ```
 python3 dijkstra.py
 
-Shortest distance is 13
-Optimal path is ['a', 'c', 'd', 'e', 'h']
-Shortest distance is 7
-Optimal path is ['a', 'b', 'c']
 ```
 
 - O programa será executado.
