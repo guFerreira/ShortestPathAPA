@@ -20,7 +20,7 @@ graph2 = {
 
 
 def dijkstra(graph, start, goal):
-    shortest_distance = {}  # records the cost to reach to that node. Going to be updated as we move along the graph
+    shortest_distance = {}
     track_prodecessor = {}
     unseenNodes = graph
     infinity = 999999
