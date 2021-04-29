@@ -10,6 +10,7 @@ Versão do [Python](https://www.python.org/downloads/) utilizada: 3.8
 ```
 
 $ git clone https://github.com/guFerreira/ShortestPathAPA.git
+pip install requirements.txt
 
 ```
 
@@ -19,7 +20,7 @@ $ git clone https://github.com/guFerreira/ShortestPathAPA.git
 - Digite o comando "python3 dijkstra.py".
 
 ```
-python3 dijkstra.py
+python alg_experimento.py -l d -n 1000 --seed 10 -e 50 -pc 2
 
 ```
 
