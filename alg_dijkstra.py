@@ -29,7 +29,6 @@ import matplotlib.colors as colors
 import matplotlib.cm as cmx
 
 import gerador_grafos
-import dijkstra
 
 import timeit
 
