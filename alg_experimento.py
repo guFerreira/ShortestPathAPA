@@ -50,6 +50,8 @@ DEFAULT_TRIALS = 3
 DEFAULT_OUTPUT = None #"alg_dijkstra.png"
 DEFAULT_ALGORITMOS = None  # executa todos
 DEFAULT_MODELOS = None
+DEFAULT_COLOR = 2
+
 
 DEFAULT_LOG_LEVEL = logging.INFO
 TIME_FORMAT = '%Y-%m-%d,%H:%M:%S'
@@ -173,7 +175,7 @@ class Experimento(ABC):
         indice_cor = 0
         # configurações de plotagem
         self.medicao_legenda = "medicao_legenda"
-        self.medicao_cor_rgb = mapa_escalar.to_rgba(2 * indice_cor + 0)
+        self.medicao_cor_rgb = mapa_escalar.to_rgba(2* indice_cor + 0)
         self.medicao_formato = formatos[1]
 
         self.aproximacao_legenda = "aproximacao_legenda"
@@ -262,19 +264,19 @@ class DijkstraAlgorithm(Experimento):
 
     def __init__(self, args):
         super().__init__(args)
-        self.id = "d"
+        self.id = "pc1"
         self.script = "alg_dijkstra.py"
         self.output = "out_alg_dijkstra.txt"
 
         indice_cor = 3
 
         # configurações de plotagem
-        self.medicao_legenda = "Dijkstra Medido"
-        self.medicao_cor_rgb = mapa_escalar.to_rgba(2 * indice_cor)
+        self.medicao_legenda = "Tempo dijkstra medido no pc 1"
+        self.medicao_cor_rgb = mapa_escalar.to_rgba(self.args.pc * indice_cor)
         self.medicao_formato = formatos[indice_cor]
 
-        self.aproximacao_legenda = "Dijkstra Aproximado"
-        self.aproximacao_cor_rgb = mapa_escalar.to_rgba(2 * indice_cor + 1)
+        self.aproximacao_legenda = "Tempo dijkstra Aproximado no pc 1"
+        self.aproximacao_cor_rgb = mapa_escalar.to_rgba(self.args.pc * indice_cor )
 
         # configurações de plotagem upper bound g(x)
         self.gn1_constante = 0.000001
@@ -300,7 +302,6 @@ class DijkstraAlgorithm(Experimento):
 
     def funcao_v_mais_e_log_v(self, n, cpu):
         '''
-        Aproximação função O(V+E (Log V))
         :param n: tamanho da instância
         :param cpu: fator de conversão para tempo de CPU
         :return: aproximação
@@ -309,6 +310,55 @@ class DijkstraAlgorithm(Experimento):
         result_log = np.log(n)
         return n * result_log * cpu  #(self.qnt_vertices + self.qnt_arestas * (math.log(self.qnt_vertices))) * cpu
 
+class Pc_Dois_Dijkstra(Experimento):
+
+    def __init__(self, args):
+        super().__init__(args)
+        self.id = "pc2"
+        self.script = "alg_dijkstra.py"
+        self.output = "out_alg_dijkstra_pc_2.txt"
+
+        indice_cor = 4
+
+        # configurações de plotagem
+        self.medicao_legenda = "Tempo dijkstra medido no pc 2"
+        self.medicao_cor_rgb = mapa_escalar.to_rgba(self.args.pc * indice_cor)
+        self.medicao_formato = formatos[indice_cor]
+
+        self.aproximacao_legenda = "Tempo dijkstra aproximado no pc 2"
+        self.aproximacao_cor_rgb = mapa_escalar.to_rgba(self.args.pc * indice_cor )
+
+        # configurações de plotagem upper bound g(x)
+        self.gn1_constante = 0.000001
+        self.gn1_legenda = "g(n)=n^2, c={:.2e}".format(self.gn1_constante)
+
+        # configurações de plotagem lower bound g(x)
+        self.gn2_constante = 0.0000001
+        self.gn2_legenda = "g(n)=n^2, c={:.2e}".format(self.gn2_constante)
+
+        self.multiplo = 1
+        self.tamanhos_aproximados = range(self.args.nmax * self.multiplo + 1)
+
+    def executa_aproximacao(self):
+        # realiza aproximação
+        parametros, pcov = opt.curve_fit(self.funcao_v_mais_e_log_v, xdata=self.tamanhos, ydata=self.medias)
+        self.aproximados = [self.funcao_v_mais_e_log_v(x, *parametros) for x in self.tamanhos_aproximados]
+        print("aproximados:           {}".format(self.aproximados))
+        print("parametros_otimizados: {}".format(parametros))
+        print("pcov:                  {}".format(pcov))
+
+    def g(self, n, c):
+        return n * n * c
+
+    def funcao_v_mais_e_log_v(self, n, cpu):
+        '''
+        :param n: tamanho da instância
+        :param cpu: fator de conversão para tempo de CPU
+        :return: aproximação
+        '''
+		
+        result_log = np.log(n)
+        return n * result_log * cpu 
 
 def main():
     '''
@@ -347,6 +397,9 @@ def main():
     help_msg = "verbosity logging level (INFO=%d DEBUG=%d)" % (logging.INFO, logging.DEBUG)
     parser.add_argument("--verbosity", "-v", help=help_msg, default=DEFAULT_LOG_LEVEL, type=int)
 
+    help_msg = "cor das informações do gráfico"
+    parser.add_argument("--pc", "-pc", help=help_msg, default=DEFAULT_COLOR, type=int)
+
     # action='store_true'
     parser.add_argument("--skip", "-k", default=False, help="Pula execução.", action='store_true')
 
@@ -369,7 +422,7 @@ def main():
     imprime_config(args)
 
     # lista de experimentos disponíveis TspNaive(args),
-    experimentos = [DijkstraAlgorithm(args)]
+    experimentos = [DijkstraAlgorithm(args), Pc_Dois_Dijkstra(args)]
 
     for e in experimentos:
         if args.algoritmos is None or e.id in args.algoritmos:
@@ -385,9 +438,9 @@ def main():
     # configurações gerais
     plt.legend()
     # plt.xticks(range(args.nstart, args.nstop+1, args.nstep))
-    plt.title("Gustavo Ferreira - Impacto de n".format(args.trials, args.seed))
+    plt.title("Tempo de Execução Algoritmo de Dijkstra(trials={}, seed={})".format(args.trials, args.seed))
     plt.xlabel("Tamanho da instância (n)")
-    plt.ylabel("Tempo")
+    plt.ylabel("Tempo em segundos")
 
     if args.out is None:
         # mostra
