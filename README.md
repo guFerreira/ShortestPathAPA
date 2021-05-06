@@ -22,7 +22,7 @@ pip install requirements.txt
 - Digite o comando "python alg_experimento.py -l pc1 -n 1000 -e 50 --seed 10".
 
 ```
-python3 alg_experimento.py -l pc1 -n 1000 - e 50 --seed 10
+python3 alg_experimento.py -l pc1 -n 1000 -e 50 --seed 10
 
 ```
 
@@ -38,7 +38,7 @@ python3 alg_experimento.py -l pc1 -n 1000 - e 50 --seed 10
 - Digite o comando "python alg_experimento.py -l pc2 -n 1000 -e 50 --seed 10".
 
 ```
-python3 alg_experimento.py -l pc2 -n 1000 - e 50 --seed 10
+python3 alg_experimento.py -l pc2 -n 1000 -e 50 --seed 10
 
 ```
 
