@@ -51,7 +51,7 @@ python3 alg_experimento.py -l pc2 -n 1000 -e 50 --seed 10
 ### Para executar e gerar o gráfico em relação aos dados gerados nos dois computadores:
 
 - Entre no diretório onde o arquivo está pelo terminal.
-- Copie as saidas das execuções no computador 1 e 2.
+- Copie os arquivos de saidas das execuções no computador 1 e 2 que possuem o nome "out_alg_dijkstra.txt" e "out_alg_dijkstra_pc_2.txt" para o mesmo diretório do arquivo "alg_experimento.py".
 - Digite o comando "python alg_experimento.py -n 1000 -e 50 --seed 10".
 
 ```
